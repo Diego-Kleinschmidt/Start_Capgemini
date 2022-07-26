@@ -4,8 +4,19 @@
  */
 package view;
 
+import controller.ProjetoControle;
+import controller.TarefaControle;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.List;
+import javax.swing.DefaultListModel;
+import model.Projeto;
+import model.Tarefa;
+import util.BotaoColunaCellRender;
+import util.PrazoColuna;
+import util.TarefaTabelaModel;
 
 /**
  *
@@ -13,12 +24,20 @@ import java.awt.Font;
  */
 public class TelaPrincipal extends javax.swing.JFrame {
 
-    /**
-     * Creates new form TelaPrincipal
-     */
+    ProjetoControle projetoControle;
+    TarefaControle tarefaControle;
+
+    DefaultListModel projetosModel;
+    TarefaTabelaModel tarefaModel;
+
     public TelaPrincipal() {
         initComponents();
+
+        initDataControler();
+        initComponetsModel();
+
         decorateTableTarefas();
+
     }
 
     /**
@@ -34,6 +53,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jLabelListaVaziaIcon = new javax.swing.JLabel();
         jLabelListaVaziaSubTitulo = new javax.swing.JLabel();
         jLabelListaVaziaTitulo = new javax.swing.JLabel();
+        jScrollPaneTarefas = new javax.swing.JScrollPane();
+        jTableTarefas = new javax.swing.JTable();
         jPanelTooBar = new javax.swing.JPanel();
         jLabelTooBarrTitle = new javax.swing.JLabel();
         jLabelTooBarSubTitle = new javax.swing.JLabel();
@@ -47,8 +68,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jScrollPaneProjeto = new javax.swing.JScrollPane();
         jListProjeto = new javax.swing.JList<>();
         jPanel5 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTableTarefas = new javax.swing.JTable();
 
         jPanelListaVazia.setBackground(java.awt.Color.white);
 
@@ -71,32 +90,64 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jPanelListaVaziaLayout.setHorizontalGroup(
             jPanelListaVaziaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelListaVaziaLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanelListaVaziaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelListaVaziaIcon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanelListaVaziaLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabelListaVaziaTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jLabelListaVaziaSubTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
+                    .addComponent(jLabelListaVaziaIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
+                    .addComponent(jLabelListaVaziaTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE))
                 .addContainerGap())
-            .addGroup(jPanelListaVaziaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanelListaVaziaLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jLabelListaVaziaSubTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
         );
         jPanelListaVaziaLayout.setVerticalGroup(
             jPanelListaVaziaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelListaVaziaLayout.createSequentialGroup()
-                .addGap(34, 34, 34)
+                .addGap(172, 172, 172)
+                .addComponent(jLabelListaVaziaSubTitulo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelListaVaziaIcon)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelListaVaziaTitulo)
-                .addContainerGap(137, Short.MAX_VALUE))
-            .addGroup(jPanelListaVaziaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanelListaVaziaLayout.createSequentialGroup()
-                    .addGap(47, 47, 47)
-                    .addComponent(jLabelListaVaziaSubTitulo)
-                    .addContainerGap(48, Short.MAX_VALUE)))
+                .addContainerGap(160, Short.MAX_VALUE))
         );
+
+        jTableTarefas.setBackground(java.awt.Color.white);
+        jTableTarefas.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTableTarefas.setForeground(new java.awt.Color(0, 153, 153));
+        jTableTarefas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Nome", "Descrição", "Prazo", "Tarefa Concluida"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTableTarefas.setGridColor(new java.awt.Color(255, 255, 255));
+        jTableTarefas.setRowHeight(50);
+        jTableTarefas.setSelectionBackground(new java.awt.Color(153, 255, 255));
+        jTableTarefas.setShowGrid(true);
+        jTableTarefas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableTarefasMouseClicked(evt);
+            }
+        });
+        jScrollPaneTarefas.setViewportView(jTableTarefas);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(700, 800));
@@ -155,7 +206,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(jPanelProjetoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabelProjetosTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabelProjetoAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -191,7 +242,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(jPanelTrefasLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabelTarefasTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 168, Short.MAX_VALUE)
                 .addComponent(jLabelTarefasAdd)
                 .addContainerGap())
         );
@@ -199,9 +250,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
             jPanelTrefasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelTrefasLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanelTrefasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelTarefasTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabelTarefasAdd))
+                .addGroup(jPanelTrefasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelTarefasAdd)
+                    .addComponent(jLabelTarefasTitulo))
                 .addContainerGap())
         );
 
@@ -211,14 +262,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jListProjeto.setBackground(new java.awt.Color(255, 255, 255));
         jListProjeto.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jListProjeto.setForeground(new java.awt.Color(0, 0, 0));
-        jListProjeto.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         jListProjeto.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jListProjeto.setFixedCellHeight(50);
         jListProjeto.setSelectionBackground(new java.awt.Color(0, 153, 153));
+        jListProjeto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jListProjetoMouseClicked(evt);
+            }
+        });
         jScrollPaneProjeto.setViewportView(jListProjeto);
 
         javax.swing.GroupLayout jPanelProjetoListaLayout = new javax.swing.GroupLayout(jPanelProjetoLista);
@@ -227,65 +278,20 @@ public class TelaPrincipal extends javax.swing.JFrame {
             jPanelProjetoListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelProjetoListaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPaneProjeto)
+                .addComponent(jScrollPaneProjeto, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanelProjetoListaLayout.setVerticalGroup(
             jPanelProjetoListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelProjetoListaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPaneProjeto)
+                .addComponent(jScrollPaneProjeto, javax.swing.GroupLayout.DEFAULT_SIZE, 464, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         jPanel5.setBackground(java.awt.Color.white);
         jPanel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        jTableTarefas.setBackground(java.awt.Color.white);
-        jTableTarefas.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTableTarefas.setForeground(new java.awt.Color(0, 153, 153));
-        jTableTarefas.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Nome", "Descrição", "Prazo", "Tarefa Concluida"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, true
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jTableTarefas.setGridColor(new java.awt.Color(255, 255, 255));
-        jTableTarefas.setRowHeight(50);
-        jTableTarefas.setSelectionBackground(new java.awt.Color(153, 255, 255));
-        jTableTarefas.setShowVerticalLines(false);
-        jScrollPane1.setViewportView(jTableTarefas);
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 774, Short.MAX_VALUE)
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 593, Short.MAX_VALUE)
-        );
+        jPanel5.setLayout(new java.awt.BorderLayout());
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -295,8 +301,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanelProjeto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanelProjetoLista, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanelProjetoLista, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelProjeto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -326,14 +332,61 @@ public class TelaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         ProjetoDialogTela projetoDialogTela = new ProjetoDialogTela(this, rootPaneCheckingEnabled);
         projetoDialogTela.setVisible(true);
+
+        projetoDialogTela.addWindowListener(new WindowAdapter() {
+            public void windowClosed(WindowEvent e) {
+                loadprojeto();
+            }
+        });
     }//GEN-LAST:event_jLabelProjetoAddMouseClicked
 
     private void jLabelTarefasAddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelTarefasAddMouseClicked
-        // TODO add your handling code here:
+
         TarefaDialogTela tarefaDialogTela = new TarefaDialogTela(this, rootPaneCheckingEnabled);
-        //tarefaDialogTela.setProjeto(null);
+
+        int projetoIndex = jListProjeto.getSelectedIndex();
+        Projeto projeto = (Projeto) projetosModel.get(projetoIndex);
+        tarefaDialogTela.setProjeto(projeto);
         tarefaDialogTela.setVisible(true);
+
+        tarefaDialogTela.addWindowListener(new WindowAdapter() {
+            public void windowClosed(WindowEvent e) {
+                int projetoIndex = jListProjeto.getSelectedIndex();
+                Projeto projeto = (Projeto) projetosModel.get(projetoIndex);
+                loadTarefas(projeto.getId());
+            }
+        });
+
+
     }//GEN-LAST:event_jLabelTarefasAddMouseClicked
+
+    private void jListProjetoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListProjetoMouseClicked
+        int projetoIndex = jListProjeto.getSelectedIndex();
+        Projeto project = (Projeto) projetosModel.get(projetoIndex);
+        loadTarefas(project.getId());
+    }//GEN-LAST:event_jListProjetoMouseClicked
+
+    private void jTableTarefasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableTarefasMouseClicked
+        int rowIndex = jTableTarefas.rowAtPoint(evt.getPoint());
+        int columnIndex = jTableTarefas.columnAtPoint(evt.getPoint());
+        Tarefa tarefa = tarefaModel.getTarefas().get(rowIndex);
+
+        switch (columnIndex) {
+            case 3:
+                tarefaControle.update(tarefa);
+                break;
+            case 4:
+
+                break;
+            case 5:
+                tarefaControle.removeById(tarefa.getId());
+                tarefaModel.getTarefas().remove(tarefa);
+                int projetoIndex = jListProjeto.getSelectedIndex();
+                Projeto projeto = (Projeto) projetosModel.get(projetoIndex);
+                loadTarefas(projeto.getId());
+                break;
+        }
+    }//GEN-LAST:event_jTableTarefasMouseClicked
 
     /**
      * @param args the command line arguments
@@ -387,20 +440,81 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelProjetoLista;
     private javax.swing.JPanel jPanelTooBar;
     private javax.swing.JPanel jPanelTrefas;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPaneProjeto;
+    private javax.swing.JScrollPane jScrollPaneTarefas;
     private javax.swing.JTable jTableTarefas;
     // End of variables declaration//GEN-END:variables
 
-
-    public void decorateTableTarefas(){
+    public void decorateTableTarefas() {
         // Custumizando o header ta table de Tarefas
         jTableTarefas.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
-        jTableTarefas.getTableHeader().setBackground(new Color(0,153,153));
-        jTableTarefas.getTableHeader().setForeground(new Color(255,255,255));
-        
+        jTableTarefas.getTableHeader().setBackground(new Color(0, 153, 153));
+        jTableTarefas.getTableHeader().setForeground(new Color(255, 255, 255));
+
+        jTableTarefas.getColumnModel().getColumn(2).setCellRenderer(new PrazoColuna());
+
+        jTableTarefas.getColumnModel().getColumn(4).setCellRenderer(new BotaoColunaCellRender("edit"));
+        jTableTarefas.getColumnModel().getColumn(5).setCellRenderer(new BotaoColunaCellRender("delete"));
+
         //Criando um sort automatico para as colunas da table
         jTableTarefas.setAutoCreateRowSorter(true);
+    }
+
+    public void initDataControler() {
+        projetoControle = new ProjetoControle();
+        tarefaControle = new TarefaControle();
+    }
+
+    public void initComponetsModel() {
+        projetosModel = new DefaultListModel();
+        loadprojeto();
+        tarefaModel = new TarefaTabelaModel();
+        jTableTarefas.setModel(tarefaModel);
+
+        if (!projetosModel.isEmpty()) {
+            jListProjeto.setSelectedIndex(0);
+            Projeto projeto = (Projeto) projetosModel.get(0);
+            loadTarefas(projeto.getId());
+        }
+
+    }
+
+    public void loadTarefas(int idProjeto) {
+        List<Tarefa> tarefas = tarefaControle.getAll(idProjeto);
+        tarefaModel.setTarefas(tarefas);
+
+        showJTableTarefas(!tarefas.isEmpty());
+    }
+
+    private void showJTableTarefas(boolean hasTasks) {
+        if (hasTasks) {
+            if (jPanelListaVazia.isVisible()) {
+                jPanelListaVazia.setVisible(false);
+                jPanel5.remove(jPanelListaVazia);
+            }
+            jPanel5.add(jScrollPaneTarefas);
+            jScrollPaneTarefas.setVisible(true);
+            jScrollPaneTarefas.setSize(jPanel5.getWidth(), jPanel5.getHeight());
+        } else {
+            if (jScrollPaneTarefas.isVisible()) {
+                jScrollPaneTarefas.setVisible(false);
+                jPanel5.remove(jScrollPaneTarefas);
+            }
+            jPanel5.add(jPanelListaVazia);
+            jPanelListaVazia.setVisible(true);
+            jPanelListaVazia.setSize(jPanel5.getWidth(), jPanel5.getHeight());
+        }
+    }
+
+    public void loadprojeto() {
+        List<Projeto> projetos = projetoControle.getAll();
+
+        projetosModel.clear();
+        for (int i = 0; i < projetos.size(); i++) {
+            Projeto projeto = projetos.get(i);
+            projetosModel.addElement(projeto);
+        }
+        jListProjeto.setModel(projetosModel);
     }
 
 }

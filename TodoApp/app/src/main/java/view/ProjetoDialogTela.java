@@ -42,6 +42,7 @@ public class ProjetoDialogTela extends javax.swing.JDialog {
         jTextFieldNome = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextAreaDescricao = new javax.swing.JTextArea();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -86,7 +87,7 @@ public class ProjetoDialogTela extends javax.swing.JDialog {
 
         jLabelNome.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabelNome.setForeground(new java.awt.Color(0, 0, 0));
-        jLabelNome.setText(" Nome");
+        jLabelNome.setText(" Nome *");
 
         jLabelDescricao.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabelDescricao.setForeground(new java.awt.Color(0, 0, 0));
@@ -103,6 +104,9 @@ public class ProjetoDialogTela extends javax.swing.JDialog {
         jTextAreaDescricao.setRows(5);
         jScrollPane1.setViewportView(jTextAreaDescricao);
 
+        jLabel1.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel1.setText("* Campo Obrigatorio");
+
         javax.swing.GroupLayout jPanelProjetoLayout = new javax.swing.GroupLayout(jPanelProjeto);
         jPanelProjeto.setLayout(jPanelProjetoLayout);
         jPanelProjetoLayout.setHorizontalGroup(
@@ -110,11 +114,16 @@ public class ProjetoDialogTela extends javax.swing.JDialog {
             .addGroup(jPanelProjetoLayout.createSequentialGroup()
                 .addGap(12, 12, 12)
                 .addGroup(jPanelProjetoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelNome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabelDescricao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE)
-                    .addComponent(jTextFieldNome))
-                .addGap(15, 15, 15))
+                    .addGroup(jPanelProjetoLayout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanelProjetoLayout.createSequentialGroup()
+                        .addGroup(jPanelProjetoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelNome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabelDescricao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE)
+                            .addComponent(jTextFieldNome))
+                        .addGap(15, 15, 15))))
         );
         jPanelProjetoLayout.setVerticalGroup(
             jPanelProjetoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -126,7 +135,9 @@ public class ProjetoDialogTela extends javax.swing.JDialog {
                 .addGap(12, 12, 12)
                 .addComponent(jLabelDescricao)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
                 .addContainerGap())
         );
 
@@ -154,17 +165,22 @@ public class ProjetoDialogTela extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabelTooBarSalvaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelTooBarSalvaMouseClicked
-        // TODO add your handling code here:
+
         try {
-            Projeto projeto = new Projeto();
-            projeto.setNome(jTextFieldNome.getText());
-            projeto.setDescricao(jTextAreaDescricao.getText());
-            controle.salva(projeto);
-            JOptionPane.showMessageDialog(rootPane, "Projeto salvo com sucesso");
+            if (!jTextAreaDescricao.getText().equals("")) {
+                Projeto projeto = new Projeto();
+                projeto.setNome(jTextFieldNome.getText());
+                projeto.setDescricao(jTextAreaDescricao.getText());
+                controle.salva(projeto);
+                JOptionPane.showMessageDialog(rootPane, "Projeto salvo com sucesso");
+                this.dispose();
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "O projeto não foi salvo, pois o campo nome nao foi preenchido");
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, e.getMessage());
         }
-        this.dispose();
+        
     }//GEN-LAST:event_jLabelTooBarSalvaMouseClicked
 
     /**
@@ -210,6 +226,7 @@ public class ProjetoDialogTela extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelDescricao;
     private javax.swing.JLabel jLabelNome;
     private javax.swing.JLabel jLabelTooBarSalva;

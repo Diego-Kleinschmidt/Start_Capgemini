@@ -45,10 +45,11 @@ public class TarefaDialogTela extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextAreaDescricao = new javax.swing.JTextArea();
         jLabelPrazo = new javax.swing.JLabel();
-        jFormattedTextFieldPrazo = new javax.swing.JFormattedTextField();
         jLabelNotas = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextAreaNotas = new javax.swing.JTextArea();
+        jFormattedTextFieldPrazo = new javax.swing.JFormattedTextField();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -92,7 +93,7 @@ public class TarefaDialogTela extends javax.swing.JDialog {
 
         jLabelNome.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabelNome.setForeground(new java.awt.Color(0, 0, 0));
-        jLabelNome.setText(" Nome");
+        jLabelNome.setText(" Nome *");
 
         jTextFieldNome.setBackground(java.awt.Color.white);
         jTextFieldNome.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -111,11 +112,7 @@ public class TarefaDialogTela extends javax.swing.JDialog {
 
         jLabelPrazo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabelPrazo.setForeground(new java.awt.Color(0, 0, 0));
-        jLabelPrazo.setText("Prazo");
-
-        jFormattedTextFieldPrazo.setBackground(new java.awt.Color(255, 255, 255));
-        jFormattedTextFieldPrazo.setForeground(new java.awt.Color(0, 0, 0));
-        jFormattedTextFieldPrazo.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
+        jLabelPrazo.setText("Prazo *");
 
         jLabelNotas.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabelNotas.setForeground(new java.awt.Color(0, 0, 0));
@@ -128,22 +125,32 @@ public class TarefaDialogTela extends javax.swing.JDialog {
         jTextAreaNotas.setRows(5);
         jScrollPane2.setViewportView(jTextAreaNotas);
 
+        jFormattedTextFieldPrazo.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
+
+        jLabel1.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel1.setText("* campos obrigatorios");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(12, 12, 12)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jFormattedTextFieldPrazo)
-                    .addComponent(jLabelNome, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabelDescricao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabelPrazo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabelNotas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextFieldNome, javax.swing.GroupLayout.Alignment.LEADING))
-                .addGap(14, 14, 14))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jFormattedTextFieldPrazo)
+                            .addComponent(jLabelNome, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabelDescricao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabelPrazo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabelNotas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 412, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldNome, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addGap(14, 14, 14))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -164,7 +171,9 @@ public class TarefaDialogTela extends javax.swing.JDialog {
                 .addComponent(jLabelNotas)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2)
-                .addGap(28, 28, 28))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -193,27 +202,31 @@ public class TarefaDialogTela extends javax.swing.JDialog {
     private void jLabelTooBarSalvaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelTooBarSalvaMouseClicked
         // TODO add your handling code here:
         try {
-            Tarefa tarefa = new Tarefa();
-            
-            tarefa.setIdProjeto(3);
-            
-            tarefa.setNome(jTextFieldNome.getText());
-            tarefa.setDescricao(jTextAreaDescricao.getText());
-            tarefa.setNota(jTextAreaNotas.getText());
-            tarefa.setConcluida(false);
-            
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy");
-            Date prazo = null;
-            prazo = dateFormat.parse(jFormattedTextFieldPrazo.getText());
-            tarefa.setPrazo(prazo);
-            
-            controle.save(tarefa);
-            
-            JOptionPane.showMessageDialog(rootPane, "Tarefa salva com sucesso");
+            if (!jTextFieldNome.getText().isEmpty() && !jFormattedTextFieldPrazo.getText().isEmpty()) {
+                Tarefa tarefa = new Tarefa();
+                tarefa.setIdProjeto(projeto.getId());
+                tarefa.setNome(jTextFieldNome.getText());
+                tarefa.setDescricao(jTextAreaDescricao.getText());
+                tarefa.setNota(jTextAreaNotas.getText());
+                tarefa.setConcluida(false);
+
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                Date prazo = null;
+                prazo = dateFormat.parse(jFormattedTextFieldPrazo.getText());
+                tarefa.setPrazo(prazo);
+
+                controle.save(tarefa);
+
+                JOptionPane.showMessageDialog(rootPane, "Tarefa salva com sucesso");
+                this.dispose();
+            } else {
+                 JOptionPane.showMessageDialog(rootPane, "Tarefa não foi salva pois existe campos obrigatorios vazio ");
+            }
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, e);
         }
-        this.dispose();
+
 
     }//GEN-LAST:event_jLabelTooBarSalvaMouseClicked
 
@@ -261,6 +274,7 @@ public class TarefaDialogTela extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFormattedTextField jFormattedTextFieldPrazo;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelDescricao;
     private javax.swing.JLabel jLabelNome;
     private javax.swing.JLabel jLabelNotas;
@@ -279,8 +293,5 @@ public class TarefaDialogTela extends javax.swing.JDialog {
     public void setProjeto(Projeto projeto) {
         this.projeto = projeto;
     }
-
-    
-    
 
 }

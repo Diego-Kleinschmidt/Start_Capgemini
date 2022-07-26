@@ -77,7 +77,7 @@ public class TarefaControle {
         }
     }
 
-    public void removeById(int tarefaId) throws SQLException {
+    public void removeById(int tarefaId)  {
         String sql = "DELETE FROM tarefas WHERE id = ?";
 
         Connection connection = null;
