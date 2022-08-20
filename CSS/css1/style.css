@@ -1,0 +1,70 @@
+html{
+
+    height: 100vh;
+}
+main{
+    background-image: url('./abstract-luxury-gradient-blue-background-smooth-dark-blue-with-black-vignette-studio-banner.jpg') ;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+
+    font-family: Mermaid , serif;
+    font-size: 1.5rem;  
+}
+main p{
+    text-indent: 3rem;
+    text-transform: initial;
+}
+main h1{
+    color: rgb(50, 172, 50);
+}
+h1,h2,h3{
+    text-align: center;
+}
+h2{
+    color: rgb(199, 196, 46);
+}
+p{
+    color: rgb(141, 143, 10);
+}
+.titulo-aula{
+    text-decoration: underline;
+    background-color: cadetblue;
+    letter-spacing: 1rem;
+}
+.texto-azul{
+    color: rgb(3, 3, 85);
+}
+.texto-vermelho{
+    color: #a72a2a;
+}
+#titulo-segunda-aula{
+    color: rgb(165, 42, 42);
+}
+
+.texto-azul.comentario{
+    color: rgb(201, 25, 177);
+}
+
+.texto-azul .comentario{
+    color: rgb(255, 140, 0);
+}
+.comentario{
+    color: rgb(0, 255, 255);
+}
+@font-face {
+    font-family: Mermaid;
+    src: url('Mermaid\ Swash\ Caps.ttf');
+}
+a{
+    text-transform:uppercase;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 700;
+    color: blue;
+}
+a:active{
+    color: chartreuse;
+}
+a:hover{
+    color:cyan;
+}
