@@ -1,0 +1,16 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+button{
+    padding: 1rem;
+    background-color: blue;
+    color: white;
+    border: none;
+    font-weight: bold;
+    font-size: 1rem;
+    border-radius: 0.8rem;
+    transition: filter .3s ease-in-out;
+    display: block;
+    margin: 10px 0;
+}
